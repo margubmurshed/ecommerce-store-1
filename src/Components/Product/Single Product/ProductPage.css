@@ -1,0 +1,11 @@
+.productImage{
+    flex-basis: 100%;
+    min-height: 500px;
+}
+
+@media (max-width: 768px) {
+    .productImage{
+        flex-basis: 500px;
+        min-height: 500px;
+    }
+}

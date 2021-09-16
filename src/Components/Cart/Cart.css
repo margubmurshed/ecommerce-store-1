@@ -1,0 +1,31 @@
+.checkout-summary{
+    flex-basis: 25%;
+    min-height: 200px !important;
+}
+
+@media (max-width: 640px){
+    .checkout-summary{
+        width: 100%;
+    }
+}
+
+.products{
+    flex-basis: 75%;
+}
+
+.amount-changer{
+    flex-basis: 80px;
+}
+
+.amount-changer input{
+    width: 30px;
+    text-align: center;
+    background: #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    outline: none
+}
+
+.cart-product-price{
+    flex-basis: 100px;
+}
