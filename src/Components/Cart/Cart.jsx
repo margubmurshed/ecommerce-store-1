@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import "./Cart.css";
 import CartProducts from "./CartProducts";
 import SummaryCard from "./SummaryCard";
-import Alert from "../Alert/Alert";
-import "./Cart.css";
 
 const MapStateToProps = (state) => {
   return {

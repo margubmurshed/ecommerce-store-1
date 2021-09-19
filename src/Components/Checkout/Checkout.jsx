@@ -1,17 +1,14 @@
-import { useLocation, useHistory } from "react-router-dom";
 import {
-  TextField,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
+  FormControlLabel, Radio, RadioGroup, TextField
 } from "@material-ui/core";
 import { useState } from "react";
+import { connect } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import { FireStore } from "../../firebase";
 import BkashLogo from "../../img/bkashLogo.png";
 import NagadLogo from "../../img/nagadLogo.svg";
 import RocketLogo from "../../img/rocketLogo.png";
 import UpayLogo from "../../img/upayLogo.jpg";
-import { FireStore } from "../../firebase";
-import { connect } from "react-redux";
 import "./Checkout.css";
 
 const MapStateToProps = (state) => {

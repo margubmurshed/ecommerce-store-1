@@ -1,6 +1,6 @@
-import GoogleLogo from "../../img/googleLogo.png";
-import { FirebaseAuth, GoogleAuthProviderInstance } from "../../firebase";
 import { useEffect, useState } from "react";
+import { FirebaseAuth, GoogleAuthProviderInstance } from "../../firebase";
+import GoogleLogo from "../../img/googleLogo.png";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);

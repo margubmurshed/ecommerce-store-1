@@ -1,12 +1,12 @@
-.dashboard-sidebar{
+.dashboard-sidebar {
     display: none;
 }
 
-.dashboard-mainbar{
+.dashboard-mainbar {
     flex-basis: 100%;
 }
 
-.responsive-dashboard-menuIcon{
+.responsive-dashboard-menuIcon {
     cursor: pointer;
     color: white !important;
     background-color: #374151 !important;
@@ -18,22 +18,20 @@
     right: 10px;
 }
 
-.dashboard-sidebar-open{
+.dashboard-sidebar-open {
     position: absolute;
     top: 0;
     left: 0;
 }
 
 @media (min-width: 768px) {
-    .dashboard-sidebar{
+    .dashboard-sidebar {
         display: block
     }
-
-    .dashboard-mainbar{
+    .dashboard-mainbar {
         flex: 0.8
     }
-
-    .responsive-dashboard-menuIcon{
+    .responsive-dashboard-menuIcon {
         display: none;
     }
 }

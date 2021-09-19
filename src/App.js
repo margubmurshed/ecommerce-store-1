@@ -1,9 +1,9 @@
-import Main from './Components/Main';
 import { Provider } from 'react-redux';
-import Store from './Redux/Store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import ThemeProvider from './MaterialTheme';
 import './App.css';
+import Main from './Components/Main';
+import ThemeProvider from './MaterialTheme';
+import Store from './Redux/Store';
 
 const App = () => {
   return (

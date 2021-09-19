@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import SearchResult from "./SearchResult";
 
 const SearchBar = props => {

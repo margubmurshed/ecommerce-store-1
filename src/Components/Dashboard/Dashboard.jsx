@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { FirebaseAuth } from "../../firebase";
 import { SetUser } from "../../Redux/ActionCreator";
 import "./Dashboard.css";
-import Orders from "./Orders";
+import Mainbar from './Mainbar';
 import Sidebar from "./Sidebar";
-
-// import Mainbar from "./Mainbar";
+import MyAccount from './MyAccount';
+import Favorites from './Favorites';
+import Orders from './Orders';
 
 const MapStateToProps = (state) => {
   return {
@@ -21,6 +23,7 @@ const MapDispatchToProps = (dispatch) => {
 };
 
 const Dashboard = ({ setUserDispatcher, user }) => {
+  const { url, path } = useRouteMatch();
   const [loading, setLoading] = useState(false);
   useEffect(() => (document.title = "Dashboard | E-commerce"), []);
 
@@ -39,11 +42,13 @@ const Dashboard = ({ setUserDispatcher, user }) => {
     <>
       <div className="w-full flex border" style={{ height: "90vh" }}>
         <Sidebar user={user} />
-        <div className="h-full overflow-y-auto dashboard-mainbar">
-          <Orders />
-        </div>
+        <Switch>
+          <Route path="/dashboard" render={() => <h2>Select a menu</h2>}/>
+          <Route path="/dashboard/my-account" exact component={MyAccount}/>
+          <Route path="/dashboard/favorites" exact component={Favorites}/>
+          <Route path="/dashboard/orders" exact component={Orders}/>
+        </Switch>
       </div>
-      
     </>
   );
 };

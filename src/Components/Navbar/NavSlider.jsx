@@ -1,5 +1,5 @@
-import { memo } from "react";
 import { Menu } from "@material-ui/icons";
+import { memo } from "react";
 const NavSlider = ({ toggleState, Toggle }) => {
   console.log("Nav Slider Render");
   return (

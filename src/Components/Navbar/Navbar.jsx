@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import TopNav from "./TopNav";
 import { connect } from "react-redux";
 import NavSlider from "./NavSlider";
+import TopNav from "./TopNav";
 
 const MapStateToProps = (state) => {
   return {
