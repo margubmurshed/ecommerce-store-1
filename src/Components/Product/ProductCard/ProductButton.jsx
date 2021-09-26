@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 const ProductButton = ({ favorites, user, product, cart }) => {
   const [addToCartLoading, setAddToCartLoading] = useState(false);
-  const [ToggleFavoritesLoading, setToggleFavoritesLoading] = useState(false);
+  const [toggleFavoritesLoading, setToggleFavoritesLoading] = useState(false);
   const AddToCartFunc = useAddToCart();
   const ToggleFavoritesFunc = useFavorites();
   const history = useHistory();
@@ -58,7 +58,7 @@ const ProductButton = ({ favorites, user, product, cart }) => {
       <IconButton
         color="primary"
         onClick={OnClickToggleFavorites}
-        disabled={ToggleFavoritesLoading}
+        disabled={toggleFavoritesLoading}
       >
         {FindWhetherFavorite() ? <Favorite /> : <FavoriteBorderOutlined />}
       </IconButton>

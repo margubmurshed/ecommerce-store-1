@@ -5,8 +5,6 @@ import GoogleLogo from "../../img/googleLogo.png";
 const Login = () => {
   const [loading, setLoading] = useState(false);
 
-  console.log("Login Component Render")
-
   useEffect(() => {
     document.title = "Login | E-commerce";
   }, []);

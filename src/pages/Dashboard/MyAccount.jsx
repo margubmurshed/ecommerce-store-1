@@ -2,9 +2,11 @@ import {
   Button, FormControl, InputLabel, MenuItem, Select, TextField
 } from "@material-ui/core";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { FireStore } from "../../firebase";
 
-const MyAccount = ({ user }) => {
+const MyAccount = () => {
+  const user = useSelector(({ user }) => user);
   const { displayName, email, uid, photoURL } = user;
   const [name, setName] = useState(user ? displayName : "");
   const [emailValue, setEmailValue] = useState(user ? email : "");
@@ -15,29 +17,29 @@ const MyAccount = ({ user }) => {
   const [loading, setLoading] = useState(false);
 
   const IsChangedMade = () => {
-      if(name !== displayName && emailValue !== email && phoneNumber !== "" && alternativePhoneNumber !== "" && deliveryAddress !== "" && defaultPaymentMethod !== "cod"){
-        return false
-      } else{
-        return true;
-      }
+    if (name !== displayName && emailValue !== email && phoneNumber !== "" && alternativePhoneNumber !== "" && deliveryAddress !== "" && defaultPaymentMethod !== "cod") {
+      return false
+    } else {
+      return true;
+    }
   }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(IsChangedMade()){
-        console.log("Changes Made")
-        setLoading(true);
-        await FireStore.collection("usersInfo").doc(uid).set({
-            name,
-            email,
-            phoneNumber,
-            alternativePhoneNumber,
-            deliveryAddress,
-            defaultPaymentMethod
-        })
-        setLoading(false);
-    }else{
-        console.log("No Changes Made")
+    if (IsChangedMade()) {
+      console.log("Changes Made")
+      setLoading(true);
+      await FireStore.collection("usersInfo").doc(uid).set({
+        name,
+        email,
+        phoneNumber,
+        alternativePhoneNumber,
+        deliveryAddress,
+        defaultPaymentMethod
+      })
+      setLoading(false);
+    } else {
+      console.log("No Changes Made")
     }
   }
 
@@ -45,7 +47,7 @@ const MyAccount = ({ user }) => {
     <div>
       <div className="p-5">
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-          <div className="bg-center bg-cover bg-no-repeat rounded-md" style={{width: '150px', height: '150px', backgroundImage: `url(${photoURL})`}} />
+          <div className="bg-center bg-cover bg-no-repeat rounded-md" style={{ width: '150px', height: '150px', backgroundImage: `url(${photoURL})` }} />
 
           <TextField
             type="text"

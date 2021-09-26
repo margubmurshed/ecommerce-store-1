@@ -2,22 +2,16 @@ import {
   FormControlLabel, Radio, RadioGroup, TextField
 } from "@material-ui/core";
 import { useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { FireStore } from "../../firebase";
-import BkashLogo from "../../img/bkashLogo.png";
-import NagadLogo from "../../img/nagadLogo.svg";
-import RocketLogo from "../../img/rocketLogo.png";
-import UpayLogo from "../../img/upayLogo.jpg";
+import BkashLogo from "../../assets/img/bkashLogo.png";
+import NagadLogo from "../../assets/img/nagadLogo.svg";
+import RocketLogo from "../../assets/img/rocketLogo.png";
+import UpayLogo from "../../assets/img/upayLogo.jpg";
 import "./Checkout.css";
 
-const MapStateToProps = (state) => {
-  return {
-    uid: state.user.uid,
-  };
-};
-
-const Checkout = ({ uid }) => {
+const Checkout = () => {
   const location = useLocation();
   const history = useHistory();
   const { cart, total } = location.state;
@@ -28,9 +22,10 @@ const Checkout = ({ uid }) => {
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const uid = useSelector(state => state.user.uid);
 
   const GetPreviousOrders = () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       FireStore.collection("orders")
         .doc(uid)
         .get()
@@ -51,9 +46,9 @@ const Checkout = ({ uid }) => {
   const AllFieldsAreFilled = () => {
     if (
       name !== "" &&
-      phoneNumber != "" &&
-      address != "" &&
-      paymentMethod != ""
+      phoneNumber !== "" &&
+      address !== "" &&
+      paymentMethod !== ""
     )
       return true;
     else {
@@ -242,4 +237,4 @@ const Checkout = ({ uid }) => {
   );
 };
 
-export default connect(MapStateToProps)(Checkout);
+export default Checkout;

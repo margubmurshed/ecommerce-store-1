@@ -7,26 +7,16 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FetchOrders } from "../../Redux/ActionCreator";
 
-const MapStateToProps = (state) => {
-  return {
-    uid: state.user.uid,
-    orders: state.orders,
-  };
-};
+const Orders = () => {
+  const dispatch = useDispatch();
+  const { uid, orders } = useSelector(({ user, orders }) => ({ uid: user.uid, orders }))
 
-const MapDispatchToProps = (dispatch) => {
-  return {
-    FetchOrdersDispatcher: (uid) => dispatch(FetchOrders(uid)),
-  };
-};
-
-const Orders = ({ orders, uid, FetchOrdersDispatcher }) => {
   useEffect(() => {
-    FetchOrdersDispatcher(uid);
+    dispatch(FetchOrders(uid))
   }, [uid]);
 
   const convertTimeToLocaleTime = (time) => {
@@ -57,7 +47,9 @@ const Orders = ({ orders, uid, FetchOrdersDispatcher }) => {
                   <TableCell>
                     {convertTimeToLocaleTime(orderInfo.time)}
                   </TableCell>
-                  <TableCell><span className="bg-yellow-100 p-3 rounded-md text-yellow-600 font-semibold">{orderInfo.status}</span></TableCell>
+                  <TableCell>
+                    <span className="bg-yellow-100 p-3 rounded-md text-yellow-600 font-semibold">{orderInfo.status}</span>
+                  </TableCell>
                   <TableCell>{orderInfo.total}</TableCell>
                   <TableCell>
                     <Link
@@ -81,4 +73,4 @@ const Orders = ({ orders, uid, FetchOrdersDispatcher }) => {
   );
 };
 
-export default connect(MapStateToProps, MapDispatchToProps)(Orders);
+export default Orders;

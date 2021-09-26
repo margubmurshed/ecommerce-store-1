@@ -1,14 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
-import ProductCard from "../Product/ProductCard";
+import { useSelector } from "react-redux";
+import ProductCard from "../../Components/Product/ProductCard";
 
-const MapStateToProps = (state) => {
-  return {
-    favorites: state.favorites,
-  };
-};
-
-const Favorites = ({ favorites }) => {
+const Favorites = () => {
+  const favorites = useSelector(({ favorites }) => favorites)
   return (
     <div className="p-5">
       <div className="bg-white rounded-md shadow-md p-3">
@@ -30,4 +25,4 @@ const Favorites = ({ favorites }) => {
   );
 };
 
-export default connect(MapStateToProps)(Favorites);
+export default Favorites;

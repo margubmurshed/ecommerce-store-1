@@ -1,17 +1,10 @@
 import { Chip } from '@material-ui/core';
-import { connect } from 'react-redux';
-import ProductImage from './Product Card/ProductImage';
-import ProductButtons from './Product Card/ProductButton';
+import { useSelector } from 'react-redux';
+import ProductImage from './ProductCard/ProductImage';
+import ProductButtons from './ProductCard/ProductButton';
 
-const MapStateToProps = state => {
-    return {
-        favorites: state.favorites,
-        user: state.user,
-        cart: state.cart
-    }
-}
-
-const Product = ({ product, user, cart, favorites }) => {
+const Product = ({ product }) => {
+    const { user, cart, favorites } = useSelector(({ user, cart, favorites }) => ({ user, cart, favorites }))
     const { name, catagory, price, productImage, id } = product;
 
     return (
@@ -43,4 +36,4 @@ const Product = ({ product, user, cart, favorites }) => {
     )
 }
 
-export default connect(MapStateToProps)(Product)
+export default Product;

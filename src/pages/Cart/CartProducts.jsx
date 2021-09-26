@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { useAddToCart } from "../Hooks/useAddToCart";
+import { useAddToCart } from "../../Components/Hooks/useAddToCart";
 
 const CartProducts = ({ cart, user }) => {
   const [productCount, setProductCount] = useState("");

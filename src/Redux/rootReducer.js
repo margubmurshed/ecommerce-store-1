@@ -31,19 +31,19 @@ const Reducer = (state = INITIAL_STATE, action) => {
             }
 
         case ActionTypes.fetchFavorites:
-            return{
+            return {
                 ...state,
                 favorites: action.payload
             }
 
         case ActionTypes.fetchUserInfo:
-            return{
+            return {
                 ...state,
                 userInfo: action.payload
             }
 
         case ActionTypes.fetchOrders:
-            return{
+            return {
                 ...state,
                 orders: action.payload
             }

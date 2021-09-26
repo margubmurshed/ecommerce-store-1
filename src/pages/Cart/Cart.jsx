@@ -1,18 +1,11 @@
 import { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import "./Cart.css";
 import CartProducts from "./CartProducts";
 import SummaryCard from "./SummaryCard";
 
-const MapStateToProps = (state) => {
-  return {
-    user: state.user,
-    cart: state.cart,
-  };
-};
-
-const Cart = ({ cart, user }) => {
-  console.log("Cart Component Render");
+const Cart = () => {
+  const { user, cart } = useSelector(({ user, cart }) => ({ user, cart }));
 
   useEffect(() => {
     document.title = `Cart ${cart.length && `(${cart.length})`} | E-commerce`;
@@ -49,18 +42,18 @@ const Cart = ({ cart, user }) => {
         </div>
       </>
     );
-  } else {
-    return (
-      <>
-        <div
-          className="w-full flex justify-center items-center"
-          style={{ minHeight: "90vh" }}
-        >
-          <p>No product in the cart</p>
-        </div>
-      </>
-    );
   }
+
+  return (
+    <>
+      <div
+        className="w-full flex justify-center items-center"
+        style={{ minHeight: "90vh" }}
+      >
+        <p>No product in the cart</p>
+      </div>
+    </>
+  );
 };
 
-export default connect(MapStateToProps)(Cart);
+export default Cart;

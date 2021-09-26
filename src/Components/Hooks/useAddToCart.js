@@ -5,21 +5,25 @@ export const useAddToCart = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const UpdateCart = (cart, product) => {
-        let cartProducts = [...cart];
-        if (cartProducts.length) {
-            cartProducts.forEach(item => {
-                if (item.product.id === product.id) {
-                    item.count++;
+    const existInCart = (nextCartItemId, prevCartItems) => {
+        return !!prevCartItems.filter(({ product }) => product.id === nextCartItemId).length;
+    }
+
+    const UpdateCart = (prevCartItems, nextCartItem) => {
+        const cartItemExists = existInCart(nextCartItem.id, prevCartItems);
+
+        if (prevCartItems.length) {
+            prevCartItems.forEach(({ count }) => {
+                if (cartItemExists) {
+                    count++;
                 } else {
-                    const IsPresentInCart = cartProducts.filter(cartItem => cartItem.product.id === product.id).length;
-                    !IsPresentInCart && cartProducts.push({ product, count: 1 });
+                    prevCartItems.push({ product: nextCartItem, count: 1 });
                 }
             })
         } else {
-            cartProducts.push({ product, count: 1 })
+            prevCartItems.push({ product: nextCartItem, count: 1 })
         }
-        return cartProducts;
+        return [...prevCartItems];
     }
 
     function AddProductToCart(product, user, cart) {
@@ -33,6 +37,7 @@ export const useAddToCart = () => {
                     setLoading(false)
                     error && setError(false);
                 }).catch(() => {
+                    setLoading(false)
                     setError(true);
                 })
         }

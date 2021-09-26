@@ -1,14 +1,8 @@
-import { connect } from "react-redux";
-import ProductCard from "../Product/ProductCard";
+import { useSelector } from "react-redux";
+import ProductCard from "../../Components/Product/ProductCard";
 
-const MapStateToProps = (state) => {
-  return {
-    products: state.products,
-  };
-};
-
-const Products = (props) => {
-  const { products } = props;
+const Products = () => {
+  const products = useSelector(({ products }) => products);
   return (
     <div className="flex flex-row flex-wrap justify-center gap-3 z-0">
       {products.length ? (
@@ -27,4 +21,4 @@ const Products = (props) => {
   );
 };
 
-export default connect(MapStateToProps)(Products);
+export default Products;

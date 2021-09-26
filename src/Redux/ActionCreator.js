@@ -40,7 +40,7 @@ export const FetchCart = user => {
                 })
             })
         } catch (e) {
-            console.log(e, "cart fetch failed")
+            // console.log(e, "cart fetch failed")
         }
     }
 }
@@ -49,22 +49,22 @@ export const FetchFavorites = uid => {
     return async (dispatch) => {
         try {
             FireStore.collection('favorites').doc(uid).onSnapshot(doc => {
-                console.log(doc.data() ? doc.data().favorites : [], "Favorites")
+                // console.log(doc.data() ? doc.data().favorites : [], "Favorites")
                 dispatch({
                     type: ActionTypes.fetchFavorites,
                     payload: doc.data() ? doc.data().favorites : []
                 })
             })
         } catch {
-            console.log("favorites fetch failed")
+            // console.log("favorites fetch failed")
         }
     }
 }
 
 export const FetchUserInfo = uid => {
-    return async(dispatch) => {
+    return async (dispatch) => {
         await FireStore.collection("usersInfo").doc(uid).onSnapshot(doc => {
-            if(doc.exists){
+            if (doc.exists) {
                 dispatch({
                     type: ActionTypes.fetchUserInfo,
                     payload: doc.data()
@@ -75,10 +75,10 @@ export const FetchUserInfo = uid => {
 }
 
 export const FetchOrders = uid => {
-    return async(dispatch) => {
+    return async (dispatch) => {
         await FireStore.collection('orders').doc(uid).onSnapshot(doc => {
-            console.log(doc.data(), 'orders')
-            if(doc.exists){
+            // console.log(doc.data(), 'orders')
+            if (doc.exists) {
                 dispatch({
                     type: ActionTypes.fetchOrders,
                     payload: doc.data().orders

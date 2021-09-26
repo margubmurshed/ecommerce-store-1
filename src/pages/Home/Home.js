@@ -3,8 +3,8 @@ import Products from './Products';
 import SearchBar from './SearchBar';
 
 const Home = () => {
-    console.log("Home Component Render")
-    useEffect(() => document.title="Home | E-commerce", [])
+    // console.log("Home Component Render")
+    useEffect(() => document.title = "Home | E-commerce", [])
     return (
         <>
             <div className="bg-gray-200 py-10" style={{ minHeight: '100vh' }}>
