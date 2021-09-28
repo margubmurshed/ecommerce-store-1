@@ -3,7 +3,7 @@
     min-height: 200px !important;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 1023px) {
     .checkout-summary {
         width: 100%;
     }

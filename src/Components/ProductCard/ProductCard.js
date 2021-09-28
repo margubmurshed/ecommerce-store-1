@@ -1,7 +1,7 @@
 import { Chip } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import ProductImage from './ProductCard/ProductImage';
-import ProductButtons from './ProductCard/ProductButton';
+import ProductImage from './ProductImage';
+import ProductButtons from './ProductButton';
 
 const Product = ({ product }) => {
     const { user, cart, favorites } = useSelector(({ user, cart, favorites }) => ({ user, cart, favorites }))
@@ -13,7 +13,7 @@ const Product = ({ product }) => {
             <div className="flex flex-col justify-between flex-1">
                 {/* Product Details */}
                 <div className="p-3 flex flex-col gap-y-2">
-                    <h3 className="text-base">{name}</h3>
+                    <h3 className="text-base">{name.slice(0, 60) + '...'}</h3>
                     <div className="flex justify-between items-center">
                         <Chip
                             label={catagory}

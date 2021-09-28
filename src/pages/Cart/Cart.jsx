@@ -29,7 +29,7 @@ const Cart = () => {
     return (
       <>
         <div className="w-full p-5 relative" style={{ minHeight: "90vh" }}>
-          <div className="flex flex-col md:flex-row items-start gap-5 w-full h-full">
+          <div className="flex flex-col lg:flex-row items-start gap-5 w-full h-full">
             <div className="products flex flex-col gap-5">
               <div className="bg-white flex justify-between md:flex-row rounded-md shadow-md p-4">
                 <p>My Cart ({cart.length} Items)</p>

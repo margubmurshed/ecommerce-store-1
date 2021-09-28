@@ -1,74 +1,37 @@
-import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { FetchSearchResults } from "../../Redux/ActionCreator";
 
-const MapStateToProps = (state) => {
-  return {
-    products: state.products,
-  };
-};
+const SearchResult = ({ searchValue }) => {
+  const dispatch = useDispatch();
+  const [relatedSearchResults, setRelatedSearchResults] = useState([]);
+  const searchResults = useSelector(({ searchResults }) => searchResults);
 
-const SearchResult = ({searchValue, products}) => {
+  useEffect(() => {
+    dispatch(FetchSearchResults());
+  }, [])
 
-  function MatchedProductsSupplier(searchValue, allProducts) {
-    const preparedSearchValueForMatch = searchValue
-      .toLowerCase()
-      .split(" ")
-      .join("");
-    return (
-      searchValue &&
-      allProducts.filter((product) =>
-        product.name
-          .toLowerCase()
-          .split(" ")
-          .join("")
-          .includes(preparedSearchValueForMatch)
-      )
-    );
-  };
+  useEffect(() => {
+    const results = searchResults.filter(({ searchString }) => {
+      return searchString.includes(searchValue.toLowerCase())
+    })
+    setRelatedSearchResults(results)
+  }, [searchValue])
 
-  const MatchedProducts = MatchedProductsSupplier(searchValue, products);
-  
+  if (!relatedSearchResults.length) return <div></div>;
   return (
     <div
-      className={`w-full ${
-        MatchedProducts.length ? "h-64" : "h-20"
-      } z-10 bg-white py-3 px-5 rounded-md shadow-md m-auto flex flex-col gap-y-5 overflow-auto`}
+      className={`w-full z-10 bg-white py-3 px-5 rounded-md shadow-md m-auto flex flex-col gap-y-5 overflow-y-auto`}
+      style={{ maxHeight: '200px' }}
     >
-      {MatchedProducts.length ? (
-        MatchedProducts.map((product) => {
-          return (
-            <Link
-              to={`/products/${product.name.split(" ").join("-")}/${
-                product.id
-              }`}
-            >
-              <div className="flex shadow">
-                {/* Image */}
-                <div className="w-full" style={{ flex: "0.3" }}>
-                  <div
-                    className="w-full h-full bg-center bg-cover bg-no-repeat"
-                    style={{ backgroundImage: `url(${product.productImage})` }}
-                  />
-                </div>
-                {/* Content */}
-                <div
-                  className="flex flex-col justify-center px-3 py-2 gap-2"
-                  style={{ flex: "0.7" }}
-                >
-                  <p className="text-xs md:text-base">{product.name}</p>
-                  <p>{product.price} Taka</p>
-                </div>
-              </div>
-            </Link>
-          );
-        })
-      ) : (
-        <div className="w-full h-full flex justify-center items-center">
-          <p>No Product Found</p>
-        </div>
-      )}
+      {relatedSearchResults.map(({ searchString }) => (
+        <Link to={`/search/${searchString.split(" ").join("+")}`}>
+          <p className="font-semibold">{searchString}</p>
+        </Link>
+      ))}
     </div>
   );
 };
 
-export default connect(MapStateToProps)(SearchResult);
+export default SearchResult;

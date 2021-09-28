@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import ProductCard from "../../Components/Product/ProductCard";
+import ProductCard from "../../Components/ProductCard/ProductCard";
+import Loader from '../../Components/Loader/Loader';
 
 const Products = () => {
   const products = useSelector(({ products }) => products);
@@ -9,14 +10,7 @@ const Products = () => {
         products.map((item) => (
           <ProductCard product={item} key={Math.random()} />
         ))
-      ) : (
-        <div className="lds-ring">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      )}
+      ) : <Loader />}
     </div>
   );
 };

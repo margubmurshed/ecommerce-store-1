@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
-import { useAddToCart } from "../../Hooks/useAddToCart";
+import { useAddToCart } from "../../Components/Hooks/useAddToCart";
 
-const MainDetails = ({Product, user, cart}) => {
+const MainDetails = ({ Product, user, cart }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const AddToCartFunc = useAddToCart();
-  const {name, catagory, price, productImage} = Product;
+  const { name, catagory, price, productImage } = Product;
+  console.log(Product)
 
   const OnClickAddToCart = () => {
-    const {error:addToCartError, loading:addToCartLoading} = AddToCartFunc(Product, user, cart);
+    const { error: addToCartError, loading: addToCartLoading } = AddToCartFunc(Product, user, cart);
     setLoading(addToCartLoading);
     setError(addToCartError);
   }
@@ -22,16 +23,10 @@ const MainDetails = ({Product, user, cart}) => {
         style={{ maxWidth: "80%" }}
       >
         <div className="flex flex-col md:flex-row bg-white p-3">
-          {/* Product Image */}
-          <div className="productImage">
-            <div
-              className="w-full h-full bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${productImage})` }}
-            />
-          </div>
+          <img src={productImage} alt="" />
           {/* Product Info */}
           <div className="p-4 md:p-10 flex flex-col gap-8">
-            <p className="text-base md:text-2xl">{name}</p>
+            <p className="text-base md:text-2xl font-semibold">{name}</p>
             <p>
               Catagory:{" "}
               <span className="px-5 py-2 bg-blue-100 rounded-md">

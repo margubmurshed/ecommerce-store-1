@@ -1,22 +1,11 @@
 import { useCallback, useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import NavSlider from "./NavSlider";
 import TopNav from "./TopNav";
 
-const MapStateToProps = (state) => {
-  return {
-    user: state.user,
-    cart: state.cart,
-  };
-};
-
-const Navbar = ({user, cart}) => {
-  console.log("Navbar Component Render")
+const Navbar = () => {
+  const { user, cart } = useSelector(({ user, cart }) => ({ user, cart }))
   const [toggle, setToggle] = useState(true);
-
-  // function Toggle() {
-  //   setToggle(prevToggle => !prevToggle);
-  // }
 
   const Toggle = useCallback(() => {
     setToggle(prevToggle => !prevToggle);
@@ -30,4 +19,4 @@ const Navbar = ({user, cart}) => {
   );
 };
 
-export default connect(MapStateToProps)(Navbar);
+export default Navbar;

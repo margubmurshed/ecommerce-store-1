@@ -11,8 +11,9 @@ import PublicRoute from './Components/HOC/PublicRoute';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Navbar from './Components/Navbar/Navbar';
-import FullProductDisplay from './Components/Product/SingleProduct/ProductPage';
-import SuccessConfirmation from './Components/SuccessConfiramtion/SuccessConfirmation';
+import FullProductDisplay from './pages/ProductDetails/ProductDetails';
+import SuccessConfirmation from './pages/SuccessConfiramtion/SuccessConfirmation';
+import SearchResults from './pages/SearchResults/SearchResults';
 import './App.css';
 
 const App = () => {
@@ -56,6 +57,9 @@ const App = () => {
           </PrivateRoute>
           <Route path="/products/:name/:id" exact>
             <FullProductDisplay />
+          </Route>
+          <Route path="/search/:searchTitle" exact>
+            <SearchResults />
           </Route>
           <Route exact>
             <Redirect to="/" />

@@ -5,8 +5,8 @@ import {
   ShoppingBasket,
 } from "@material-ui/icons";
 import { useState } from "react";
-import { useAddToCart } from "../../Hooks/useAddToCart";
-import { useFavorites } from "../../Hooks/useFavorites";
+import { useAddToCart } from "../Hooks/useAddToCart";
+import { useFavorites } from "../Hooks/useFavorites";
 import { useHistory } from "react-router-dom";
 
 const ProductButton = ({ favorites, user, product, cart }) => {

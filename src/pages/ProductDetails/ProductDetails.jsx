@@ -1,23 +1,14 @@
 import { useParams } from "react-router-dom";
-import { connect } from "react-redux";
-import { FindProduct } from "../FindProduct";
-import RelatedProducts from "../RelatedProducts";
+import { useSelector } from "react-redux";
+import { FindProduct } from "../../Components/Product/FindProduct";
+import RelatedProducts from "../../Components/Product/RelatedProducts";
 import MainDetails from "./MainDetails";
 import Description from "./Description";
-import "./ProductPage.css";
+import "./ProductDetails.css";
 
-const MapStateToProps = (state) => {
-  return {
-    user: state.user,
-    cart: state.cart,
-    products: state.products,
-  };
-};
-
-const ProductPage = ({ products, user, cart }) => {
+const ProductDetails = () => {
+  const { user, cart, products } = useSelector(({ user, cart, products }) => ({ user, cart, products }));
   const { id: productID, name: ProductName } = useParams();
-
-  console.log("Product Page Render");
 
   if (products.length) {
     const FoundProduct = FindProduct(productID, ProductName, products);
@@ -54,4 +45,4 @@ const ProductPage = ({ products, user, cart }) => {
   }
 };
 
-export default connect(MapStateToProps)(ProductPage);
+export default ProductDetails;

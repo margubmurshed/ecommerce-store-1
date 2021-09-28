@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     cart: [],
     favorites: [],
     orders: [],
+    searchResults: [],
     user: null,
     userInfo: null
 }
@@ -46,6 +47,12 @@ const Reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 orders: action.payload
+            }
+
+        case ActionTypes.FETCH_SEARCH_RESULTS:
+            return {
+                ...state,
+                searchResults: action.payload
             }
 
         default: return state;

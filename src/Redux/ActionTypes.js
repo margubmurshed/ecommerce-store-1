@@ -7,3 +7,4 @@ export const fetchFavorites = "FETCH_FAVORITES";
 export const resetCart = "RESET_CART";
 export const fetchUserInfo = "FETCH_USER_INFO";
 export const fetchOrders = "FETCH_ORDERS";
+export const FETCH_SEARCH_RESULTS = "FETCH_SEARCH_RESULTS";

@@ -87,3 +87,15 @@ export const FetchOrders = uid => {
         })
     }
 }
+
+export const FetchSearchResults = () => {
+    return async (dispatch) => {
+        const searchResults = [];
+        const querySnapshot = await FireStore.collection("searchResults").get();
+        querySnapshot.forEach(doc => searchResults.push(doc.data()));
+        dispatch({
+            type: ActionTypes.FETCH_SEARCH_RESULTS,
+            payload: searchResults
+        })
+    }
+}

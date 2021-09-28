@@ -1,6 +1,6 @@
 import React from "react";
 
-const Description = ({description}) => {
+const Description = ({ description }) => {
   return (
     <>
       <div
