@@ -12,10 +12,10 @@ const Navbar = () => {
   }, [])
 
   return (
-    <>
+    <nav>
       <TopNav Toggle={Toggle} user={user} cart={cart} />
-      <NavSlider toggleState={toggle} Toggle={Toggle} />
-    </>
+      <NavSlider toggleState={toggle} Toggle={Toggle} user={user} />
+    </nav>
   );
 };
 

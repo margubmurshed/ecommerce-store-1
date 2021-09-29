@@ -1,43 +1,48 @@
 import { Fragment, useState } from "react";
 import { useAddToCart } from "../../Components/Hooks/useAddToCart";
+import useInnerWidth from "../../Components/Hooks/useInnerWidth";
 
-const CartProducts = ({ cart, user }) => {
-  const [productCount, setProductCount] = useState("");
-  const AddToCartFunc = useAddToCart();
+const CartProducts = ({ cart }) => {
+  const [addToCartLoading, setAddToCartLoading] = useState(false);
+  const AddToCart = useAddToCart();
+  const width = useInnerWidth();
 
-  const handleSubmit = (e, product) => {
-    e.preventDefault();
-    // AddToCartFunc(product, user, cart)
-    console.log(e.target.children[0].value);
-  }
+  // const OnClickAddToCart = (product, type) => {
+  //   const { loading } = AddToCart(cart, product, type);
+  //   console.log('clicked! loading', loading)
+  //   setAddToCartLoading(loading);
+  // };
 
   return (
     <>
       <div className="bg-white flex flex-col gap-2 rounded-md shadow-md p-4">
-        {cart.map(({ product, count }) => {
+        {cart.map(cartItem => {
+          const { product, count } = cartItem;
           return (
             <Fragment key={Math.random()}>
-              <div className="flex gap-10 overflow-x-auto">
+              <div className="flex gap-5 overflow-x-auto">
                 <img
                   src={product.productImage}
                   alt={product.name}
-                  className="w-12 md:w-20 h-auto"
+                  className="w-12 h-12 md:h-auto"
+                  style={{ flexBasis: '10%' }}
                 />
-                <p className="text-xs md:text-base">{product.name}</p>
-                <div className="flex amount-changer justify-between items-center">
-                  <button>+</button>
-                  <form onSubmit={(e) => handleSubmit(e, product)}>
-                    <input
-                      type="tel"
-                      value={productCount ? productCount : count}
-                      onChange={(e) => setProductCount(e.target.value)}
-                      required
-                    />
-                    <input type="submit" className="hidden" />
-                  </form>
-                  <button>-</button>
+                <p
+                  className="text-xs md:text-base"
+                  style={{ flexBasis: '60%' }}
+                >
+                  {width <= 640 ? product.name.slice(0, 60).concat('...') : product.name}
+                </p>
+                <div className="flex amount-changer gap-3 justify-between items-center" style={{ flexBasis: '10%' }}>
+                  <button onClick={() => AddToCart(cart, product, 'increase')}>+</button>
+                  <input
+                    type="tel"
+                    value={count}
+                    readOnly
+                  />
+                  <button onClick={() => AddToCart(cart, product, 'decrease')}>-</button>
                 </div>
-                <p className="cart-product-price flex items-center justify-center">
+                <p className="cart-product-price flex items-center justify-center text-sm md:text-base" style={{ flexBasis: '20%' }}>
                   Tk. {product.price}
                 </p>
               </div>

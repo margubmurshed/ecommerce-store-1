@@ -1,7 +1,8 @@
 import { Menu } from "@material-ui/icons";
 import { memo } from "react";
-const NavSlider = ({ toggleState, Toggle }) => {
-  console.log("Nav Slider Render");
+import { NavLink } from "react-router-dom";
+
+const NavSlider = ({ toggleState, Toggle, user }) => {
   return (
     <>
       <div
@@ -9,13 +10,13 @@ const NavSlider = ({ toggleState, Toggle }) => {
         style={
           toggleState
             ? {
-                left: "-100%",
-                transition: "left 1s ease-in-out",
-              }
+              left: "-100%",
+              transition: "left 1s ease-in-out",
+            }
             : {
-                left: "0",
-                transition: "left 0.5s ease",
-              }
+              left: "0",
+              transition: "left 0.5s ease",
+            }
         }
       >
         <div className="flex items-center gap-x-2">
@@ -33,23 +34,21 @@ const NavSlider = ({ toggleState, Toggle }) => {
             </span>
           </a>
         </div>
-        <ul className="flex flex-col gap-y-3">
-          <li className="bg-gray-100 p-3 rounded-xl cursor-pointer transition hover:bg-blue-500 hover:text-white">
-            <a href="/">Home</a>
-          </li>
-          <li className="bg-gray-100 p-3 rounded-xl cursor-pointer transition hover:bg-blue-500 hover:text-white">
-            <a href="/contact">Contact</a>
-          </li>
-          <li className="bg-gray-100 p-3 rounded-xl cursor-pointer transition hover:bg-blue-500 hover:text-white">
-            <a href="/about">About</a>
-          </li>
-          <li className="bg-gray-100 p-3 rounded-xl cursor-pointer transition hover:bg-blue-500 hover:text-white">
-            <a href="/blog">Blog</a>
-          </li>
-          <li className="bg-gray-100 p-3 rounded-xl cursor-pointer transition hover:bg-blue-500 hover:text-white">
-            <a href="/shop">Shop</a>
-          </li>
-        </ul>
+        <div className="flex flex-col gap-y-3">
+          {user ? (
+            <>
+              <NavLink to="/" className="bg-gray-100 p-3 rounded-md cursor-pointer transition hover:bg-blue-500 hover:text-white" activeClassName="bg-blue-500 text-white" exact>Home</NavLink>
+              <NavLink to="/cart" className="bg-gray-100 p-3 rounded-md cursor-pointer transition hover:bg-blue-500 hover:text-white" activeClassName="bg-blue-500 text-white" exact>Cart</NavLink>
+              <NavLink to="/dashboard" className="bg-gray-100 p-3 rounded-md cursor-pointer transition hover:bg-blue-500 hover:text-white" activeClassName="bg-blue-500 text-white" exact>Dashboard</NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink to="/" className="bg-gray-100 p-3 rounded-md cursor-pointer transition hover:bg-blue-500 hover:text-white" activeClassName="bg-blue-500 text-white" exact>Home</NavLink>
+              <NavLink to="/login" className="bg-gray-100 p-3 rounded-md cursor-pointer transition hover:bg-blue-500 hover:text-white" activeClassName="bg-blue-500 text-white" exact>Login</NavLink>
+            </>
+          )
+          }
+        </div>
       </div>
     </>
   );

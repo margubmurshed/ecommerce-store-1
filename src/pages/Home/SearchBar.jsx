@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { FireStore } from "../../firebase";
 import SearchResult from "./SearchResult";
 
-const SearchBar = props => {
+const SearchBar = () => {
   const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
   const handleSubmit = async e => {
@@ -17,7 +17,7 @@ const SearchBar = props => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          className="w-full outline-none py-3 px-5 rounded-md m-auto mb-2"
+          className="w-full outline-none text-sm md:text-base py-3 px-5 rounded-md m-auto mb-2"
           placeholder="Enter Product Name Or Catagory ( Ex. Shirt, Hijab )"
           onChange={e => setSearchValue(e.target.value)}
           value={searchValue}

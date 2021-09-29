@@ -32,8 +32,8 @@ const Cart = () => {
           <div className="flex flex-col lg:flex-row items-start gap-5 w-full h-full">
             <div className="products flex flex-col gap-5">
               <div className="bg-white flex justify-between md:flex-row rounded-md shadow-md p-4">
-                <p>My Cart ({cart.length} Items)</p>
-                <p>Total: {Total()} Tk.</p>
+                <p className="font-semibold text-sm md:text-base">My Cart ({cart.length} Items)</p>
+                <p className="font-semibold text-sm md:text-base">Total: {Total()} Tk.</p>
               </div>
               <CartProducts cart={cart} user={user} />
             </div>

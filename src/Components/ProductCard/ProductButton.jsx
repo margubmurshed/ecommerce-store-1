@@ -17,7 +17,7 @@ const ProductButton = ({ favorites, user, product, cart }) => {
   const history = useHistory();
 
   const OnClickAddToCart = () => {
-    const { loading } = AddToCartFunc(product, user, cart);
+    const { loading } = AddToCartFunc(cart, product, 'increase');
     setAddToCartLoading(loading);
   };
 

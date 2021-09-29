@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     products: [],
     favorites: [],
     cart: [],
+    // eslint-disable-next-line no-dupe-keys
     favorites: [],
     orders: [],
     searchResults: [],
@@ -26,6 +27,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
             }
 
         case ActionTypes.fetchCart:
+            // console.log(action.payload, 'fetch cart')
             return {
                 ...state,
                 cart: action.payload

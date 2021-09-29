@@ -4,10 +4,10 @@ import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
 const TopNav = ({ Toggle, user, cart }) => {
-  console.log("Top Nav Render")
+  // console.log("Top Nav Render")
   return (
     <>
-      <div className="flex items-center justify-between bg-white px-5 gap-x-2 sticky top-0" style={{height: '10vh'}}>
+      <div className="flex items-center justify-between bg-white px-5 gap-x-2 sticky top-0" style={{ height: '70px' }}>
         <div className="flex items-center gap-x-2">
           <Menu
             className="cursor-pointer text-3xl important"
@@ -15,7 +15,7 @@ const TopNav = ({ Toggle, user, cart }) => {
           />
           <NavLink
             to="/"
-            className="font-bold md:text-xl text-sm hover:bg-blue-100 px-5 py-3 rounded-xl transition-all"
+            className="font-bold md:text-xl text-base pl-2 rounded-xl transition-all"
           >
             E-
             <span className="text-blue-600 font-semibold lowercase">
