@@ -4,7 +4,7 @@ import NavSlider from "./NavSlider";
 import TopNav from "./TopNav";
 
 const Navbar = () => {
-  const { user, cart } = useSelector(({ user, cart }) => ({ user, cart }))
+  const { user, cart, userInfo } = useSelector(({ user, cart, userInfo }) => ({ user, cart, userInfo }))
   const [toggle, setToggle] = useState(true);
 
   const Toggle = useCallback(() => {
@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <TopNav Toggle={Toggle} user={user} cart={cart} />
+      <TopNav Toggle={Toggle} user={user} cart={cart} userInfo={userInfo} />
       <NavSlider toggleState={toggle} Toggle={Toggle} user={user} />
     </nav>
   );

@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FireStore } from '../../firebase';
 
 export const useFavorites = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const { favorites, user } = useSelector(({ favorites, user }) => ({ favorites, user }));
 
 
-    const AddToFavorites = (prevFavorites, product, uid) => {
+    const AddToFavorites = (product) => {
         setLoading(true);
-        FireStore.collection('favorites').doc(uid).set({ favorites: [...prevFavorites, product] })
+        FireStore.collection('favorites').doc(user.uid).set({ favorites: [...favorites, product] })
             .then(() => setLoading(false))
             .catch(() => {
                 setLoading(false);
@@ -17,14 +19,14 @@ export const useFavorites = () => {
             })
     }
 
-    const DeleteFromFavorites = (prevFavorites, product, uid) => {
-        const Favorites = [...prevFavorites];
+    const DeleteFromFavorites = (product) => {
+        const Favorites = [...favorites];
         Favorites.forEach((favorite, index) => {
             if (favorite.id === product.id) Favorites.splice(index, 1)
         })
 
         setLoading(true);
-        FireStore.collection('favorites').doc(uid).set({ favorites: Favorites })
+        FireStore.collection('favorites').doc(user.uid).set({ favorites: Favorites })
             .then(() => setLoading(false))
             .catch(() => {
                 setLoading(false);
@@ -32,11 +34,11 @@ export const useFavorites = () => {
             })
     }
 
-    return (prevFavorites, product, uid, bool) => {
+    return (product, bool) => {
         if (bool) {
-            AddToFavorites(prevFavorites, product, uid);
+            AddToFavorites(product);
         } else {
-            DeleteFromFavorites(prevFavorites, product, uid)
+            DeleteFromFavorites(product)
         }
 
         return { loading, error }

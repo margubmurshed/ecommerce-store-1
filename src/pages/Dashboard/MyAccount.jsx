@@ -4,48 +4,42 @@ import {
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { FireStore } from "../../firebase";
+import Alert from '../../Components/Alert/Alert';
 
 const MyAccount = () => {
-  const user = useSelector(({ user }) => user);
+  const { user, userInfo } = useSelector(({ user, userInfo }) => ({ user, userInfo }));
   const { displayName, email, uid, photoURL } = user;
-  const [name, setName] = useState(user ? displayName : "");
-  const [emailValue, setEmailValue] = useState(user ? email : "");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState("");
-  const [deliveryAddress, setDeliveryAddress] = useState("");
-  const [defaultPaymentMethod, setDefaultPaymentMethod] = useState("cod");
+  const [name, setName] = useState(userInfo ? userInfo.name : displayName);
+  const [emailValue, setEmailValue] = useState(userInfo ? userInfo.email : email);
+  const [phoneNumber, setPhoneNumber] = useState(userInfo && userInfo.phoneNumber);
+  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState(userInfo && userInfo.alternativePhoneNumber);
+  const [deliveryAddress, setDeliveryAddress] = useState(userInfo && userInfo.deliveryAddress);
+  const [defaultPaymentMethod, setDefaultPaymentMethod] = useState(userInfo ? userInfo.defaultPaymentMethod : "cod");
   const [loading, setLoading] = useState(false);
-
-  const IsChangedMade = () => {
-    if (name !== displayName && emailValue !== email && phoneNumber !== "" && alternativePhoneNumber !== "" && deliveryAddress !== "" && defaultPaymentMethod !== "cod") {
-      return false
-    } else {
-      return true;
-    }
-  }
+  const [alerts, setAlert] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (IsChangedMade()) {
-      console.log("Changes Made")
-      setLoading(true);
-      await FireStore.collection("usersInfo").doc(uid).set({
-        name,
-        email,
-        phoneNumber,
-        alternativePhoneNumber,
-        deliveryAddress,
-        defaultPaymentMethod
-      })
-      setLoading(false);
-    } else {
-      console.log("No Changes Made")
-    }
+    setAlert([]);
+    setLoading(true);
+    await FireStore.collection("usersInfo").doc(uid).set({
+      name,
+      email,
+      phoneNumber,
+      alternativePhoneNumber,
+      deliveryAddress,
+      defaultPaymentMethod
+    })
+    setLoading(false);
+    setAlert([...alerts, { message: "Profile Updated!", color: 'green' }])
+    setTimeout(() => setAlert([]), 5000);
   }
 
   return (
-    <div>
+    <>
       <div className="p-5">
+        <div className="bg-blue-500 text-white p-3 mb-5 text-center rounded-md">My Account</div>
+        {alerts.length ? alerts.map(({ message, color }) => <Alert message={message} color={color} />) : null}
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <div className="bg-center bg-cover bg-no-repeat rounded-md" style={{ width: '150px', height: '150px', backgroundImage: `url(${photoURL})` }} />
 
@@ -106,7 +100,7 @@ const MyAccount = () => {
           <Button variant="contained" color="primary" type="submit" disabled={loading}>Save Changes</Button>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

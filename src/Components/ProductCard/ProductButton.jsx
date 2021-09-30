@@ -25,20 +25,10 @@ const ProductButton = ({ favorites, user, product, cart }) => {
     if (user) {
       const favorite = FindWhetherFavorite();
       if (!favorite) {
-        const { loading } = ToggleFavoritesFunc(
-          favorites,
-          product,
-          user.uid,
-          true
-        );
+        const { loading } = ToggleFavoritesFunc(product, true);
         setToggleFavoritesLoading(loading);
       } else {
-        const { loading } = ToggleFavoritesFunc(
-          favorites,
-          product,
-          user.uid,
-          false
-        );
+        const { loading } = ToggleFavoritesFunc(product, false);
         setToggleFavoritesLoading(loading);
       }
     } else {

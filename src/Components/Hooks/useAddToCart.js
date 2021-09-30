@@ -17,50 +17,37 @@ export const useAddToCart = () => {
         const InitialCartItem = { product: nextProduct, count: 1 };
 
         if (prevCartItems.length) {
-            //console.log('there is previous cartItems')
-            prevCartItems.forEach((cartItem) => {
+            const UpdatedCartItems = [...prevCartItems];
+            UpdatedCartItems.forEach((cartItem) => {
                 if (cartItem.product.id === nextProduct.id) {
-                    //next add to cart product is present in the cart so let's just increase the count
-                    cartItem.count += 1;
+                    cartItem.count++;
                 } else {
-                    //next add to cart product is not present in the cart. 
-                    //so we have the products which is not next product and the next product which needs to be added to cart
-                    [...prevCartItems, { product: nextProduct }].forEach(Item => {
-                        //in the cart, there are some products which are not next product. we have nothing to do with it
-                        const exists = existInCart(Item.product.id, prevCartItems);
+                    [...UpdatedCartItems, { product: nextProduct }].forEach(Item => {
+                        const exists = existInCart(Item.product.id, UpdatedCartItems);
                         if (!exists) {
-                            //product which is not present in the prevCart will be pushed to prevCart
-                            prevCartItems.push(InitialCartItem)
+                            UpdatedCartItems.push(InitialCartItem)
                         }
                     })
                 }
             })
+            return UpdatedCartItems;
         } else {
-            // console.log('no previous cartItems');
-            prevCartItems.push(InitialCartItem)
+            return [InitialCartItem];
         }
-
-        return prevCartItems;
     }
 
     const DecreaseCart = (prevCartItems, nextProduct) => {
-        prevCartItems.forEach((cartItem, index, array) => {
-            console.log(cartItem, index, array, 'from decreament')
+        const UpdatedCartItems = [...prevCartItems];
+        UpdatedCartItems.forEach((cartItem, index) => {
             if (cartItem.product.id === nextProduct.id) {
-                console.log("product is in the cart")
                 if (cartItem.count > 1) {
-                    console.log('product count is more than one');
                     cartItem.count--;
-                    console.log('product count has been decreased');
                 } else {
-                    console.log('product count is 1 and should be removed the whole');
-                    prevCartItems.splice(index, 1)
-                    console.log('product has been removed full');
+                    UpdatedCartItems.splice(index, 1)
                 }
             }
         })
-        console.log('decreased Cart Items', prevCartItems)
-        return prevCartItems;
+        return UpdatedCartItems;
     }
 
     const UpdateCart = (prevCartItems, nextProduct, type) => {
@@ -72,11 +59,9 @@ export const useAddToCart = () => {
     }
 
     function AddProductToCart(cart, product, type) {
-        console.log('add to product called', product, type)
         if (user) {
             setLoading(true);
             const updatedCart = UpdateCart(cart, product, type);
-            console.log(updatedCart, 'updatedCart')
             FireStore.collection("carts")
                 .doc(user.uid)
                 .set({
@@ -87,7 +72,6 @@ export const useAddToCart = () => {
                 }).catch(() => {
                     setLoading(false)
                     setError(true);
-                    // console.log('error found on addtocart')
                 })
         } else {
             history.push('/login');

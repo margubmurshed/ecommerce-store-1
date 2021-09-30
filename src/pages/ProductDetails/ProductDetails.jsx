@@ -16,17 +16,12 @@ const ProductDetails = () => {
       const { catagory, description, id } = FoundProduct;
       return (
         <div
-          className="bg-gray-200 flex flex-col items-center gap-5 py-10"
-          style={{ minHeight: "100vh" }}
+          className="bg-gray-200 flex flex-col items-center gap-5 p-2 m-auto"
+          style={{ minHeight: "100vh", maxWidth: '1200px' }}
         >
           <MainDetails Product={FoundProduct} user={user} cart={cart} />
           <Description description={description} />
-          <div
-            className="bg-white p-10 shadow-md m-auto"
-            style={{ maxWidth: "80%" }}
-          >
-            <RelatedProducts catagory={catagory} productId={id} />
-          </div>
+          <RelatedProducts catagory={catagory} productId={id} />
         </div>
       );
     } else {

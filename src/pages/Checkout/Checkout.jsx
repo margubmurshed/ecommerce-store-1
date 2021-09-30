@@ -10,24 +10,25 @@ import NagadLogo from "../../assets/img/nagadLogo.svg";
 import RocketLogo from "../../assets/img/rocketLogo.png";
 import UpayLogo from "../../assets/img/upayLogo.jpg";
 import "./Checkout.css";
+import Alert from "../../Components/Alert/Alert";
 
 const Checkout = () => {
   const location = useLocation();
   const history = useHistory();
+  const { user, userInfo } = useSelector(({ user, userInfo }) => ({ user, userInfo }));
   const { cart, total } = location.state;
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const [name, setName] = useState(userInfo ? userInfo.name : user.displayName);
+  const [phoneNumber, setPhoneNumber] = useState(userInfo && userInfo.phoneNumber);
+  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState(userInfo && userInfo.alternativePhoneNumber);
+  const [address, setAddress] = useState(userInfo && userInfo.deliveryAddress);
+  const [paymentMethod, setPaymentMethod] = useState(userInfo ? userInfo.defaultPaymentMethod : "cod");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const uid = useSelector(state => state.user.uid);
+  const [errors, setError] = useState([]);
 
   const GetPreviousOrders = () => {
     return new Promise(resolve => {
       FireStore.collection("orders")
-        .doc(uid)
+        .doc(user.uid)
         .get()
         .then((doc) => {
           const PreviousOrders = [];
@@ -40,7 +41,7 @@ const Checkout = () => {
   };
 
   const ResetCart = () => {
-    FireStore.collection("carts").doc(uid).set({ cart: [] });
+    FireStore.collection("carts").doc(user.uid).set({ cart: [] });
   };
 
   const AllFieldsAreFilled = () => {
@@ -56,41 +57,45 @@ const Checkout = () => {
     }
   };
 
+  const createOrder = () => {
+    return {
+      userInfo: {
+        name,
+        phoneNumber,
+        alternativePhoneNumber,
+        address,
+        paymentMethod,
+      },
+      orderInfo: {
+        products: cart,
+        total,
+        time: new Date().getTime(),
+        status: 'Pending'
+      }
+    };
+  }
+
   const OnClickOrderNow = async () => {
     if (AllFieldsAreFilled()) {
       const PreviousOrders = await GetPreviousOrders();
-      const Order = {
-        userInfo: {
-          name,
-          phoneNumber,
-          alternativePhoneNumber,
-          address,
-          paymentMethod,
-        },
-        orderInfo: {
-          products: cart,
-          total,
-          time: new Date().getTime(),
-          status: 'Pending'
-        }
-      };
+      const Order = createOrder();
 
       try {
         setError(false);
         setLoading(true);
         await FireStore.collection("orders")
-          .doc(uid)
+          .doc(user.uid)
           .set({ orders: [...PreviousOrders, Order] });
         ResetCart();
         history.push({
-          pathname: `/orderconfirmation/${uid}`,
+          pathname: `/orderconfirmation/${user.uid}`,
           state: {
-            uid,
+            uid: user.uid,
           },
         });
         setLoading(false);
       } catch {
-        setError(true);
+        setError([...errors, 'Order Placement Failed']);
         setLoading(false);
       }
     }
@@ -98,6 +103,7 @@ const Checkout = () => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-3 p-3 relative">
+      {errors.length ? errors.map(message => <Alert message={message} color="red" />) : null}
       <div className="flex flex-col bg-white rounded-md shadow-md p-5 gap-3 checkout-details">
         <span className="text-xl font-semibold px-5 py-3 bg-blue-100 text-blue-800 rounded-md">
           Shipping Info

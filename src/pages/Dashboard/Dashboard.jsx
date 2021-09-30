@@ -4,9 +4,11 @@ import Sidebar from "./Sidebar";
 import MyAccount from './MyAccount';
 import Favorites from './Favorites';
 import Orders from './Orders';
+import useInnerWidth from '../../Components/Hooks/useInnerWidth';
 
 const Dashboard = () => {
   const [currentTab, setCurrentTab] = useState('my-account');
+  const width = useInnerWidth();
   useEffect(() => (document.title = "Dashboard | E-commerce"), []);
 
   const findComponent = () => {
@@ -26,9 +28,9 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="w-full flex border" style={{ height: "90vh" }}>
-        <Sidebar currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        <div style={{ flex: '0.8' }} className="overflow-y-auto">
+      <div className="w-full flex flex-col md:flex-row border" style={{ height: "90vh" }}>
+        <Sidebar currentTab={currentTab} width={width} setCurrentTab={setCurrentTab} />
+        <div style={{ flex: width >= 768 ? '0.8' : '1' }} className={width >= 768 ? "overflow-y-auto" : ''}>
           {findComponent()}
         </div>
       </div>

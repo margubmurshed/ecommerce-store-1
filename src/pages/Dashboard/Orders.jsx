@@ -26,6 +26,7 @@ const Orders = () => {
 
   return (
     <div className="p-5">
+      <div className="bg-blue-500 text-white p-3 mb-5 text-center rounded-md">My Orders</div>
       <div className="overflow-x-auto">
         <TableContainer component={Paper}>
           <Table>
@@ -50,7 +51,7 @@ const Orders = () => {
                   <TableCell>
                     <span className="bg-yellow-100 p-3 rounded-md text-yellow-600 font-semibold">{orderInfo.status}</span>
                   </TableCell>
-                  <TableCell>{orderInfo.total}</TableCell>
+                  <TableCell>{orderInfo.total} Taka</TableCell>
                   <TableCell>
                     <Link
                       to={{
@@ -58,9 +59,7 @@ const Orders = () => {
                         state: { orderInfo, userInfo },
                       }}
                     >
-                      <Button variant="contained" color="primary">
-                        View
-                      </Button>
+                      view
                     </Link>
                   </TableCell>
                 </TableRow>

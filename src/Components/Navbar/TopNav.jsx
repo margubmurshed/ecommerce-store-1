@@ -3,8 +3,8 @@ import { Menu, PersonOutline, ShoppingBasket } from "@material-ui/icons";
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
-const TopNav = ({ Toggle, user, cart }) => {
-  // console.log("Top Nav Render")
+const TopNav = ({ Toggle, user, cart, userInfo }) => {
+  const name = userInfo ? userInfo.name : user ? user.displayName : '';
   return (
     <>
       <div className="flex items-center justify-between bg-white px-5 gap-x-2 sticky top-0" style={{ height: '70px' }}>
@@ -46,7 +46,7 @@ const TopNav = ({ Toggle, user, cart }) => {
                 <div className="hidden md:block">
                   <Chip
                     avatar={<Avatar src={user.photoURL} alt="user photo" />}
-                    label={user.displayName}
+                    label={name.length < 20 ? name : name.slice(0, 16) + '...'}
                     variant="outlined"
                     clickable
                   />
