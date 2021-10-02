@@ -17,7 +17,7 @@ const Ratings = ({ productId }) => {
     useEffect(() => {
         getProductReviews();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [productId])
 
     const getUserName = () => {
         return userInfo ? userInfo.name : user.displayName;

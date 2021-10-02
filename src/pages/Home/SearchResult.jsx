@@ -10,6 +10,7 @@ const SearchResult = ({ searchValue }) => {
 
   useEffect(() => {
     dispatch(FetchSearchResults());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const SearchResult = ({ searchValue }) => {
       return searchString.includes(searchValue.toLowerCase())
     })
     setRelatedSearchResults(results)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue])
 
   if (!relatedSearchResults.length) return <div></div>;

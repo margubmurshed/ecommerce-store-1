@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,7 +7,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { FetchOrders } from "../../Redux/ActionCreator";
 
 const Orders = () => {
@@ -17,6 +15,7 @@ const Orders = () => {
 
   useEffect(() => {
     dispatch(FetchOrders(uid))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 
   const convertTimeToLocaleTime = (time) => {

@@ -1,17 +1,10 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { useAddToCart } from "../../Components/Hooks/useAddToCart";
 import useInnerWidth from "../../Components/Hooks/useInnerWidth";
 
 const CartProducts = ({ cart }) => {
-  const [addToCartLoading, setAddToCartLoading] = useState(false);
   const AddToCart = useAddToCart();
   const width = useInnerWidth();
-
-  // const OnClickAddToCart = (product, type) => {
-  //   const { loading } = AddToCart(cart, product, type);
-  //   console.log('clicked! loading', loading)
-  //   setAddToCartLoading(loading);
-  // };
 
   return (
     <>
