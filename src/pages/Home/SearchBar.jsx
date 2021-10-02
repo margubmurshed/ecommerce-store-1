@@ -18,7 +18,7 @@ const SearchBar = () => {
         <input
           type="text"
           className="w-full outline-none text-sm md:text-base py-3 px-5 rounded-md m-auto mb-2"
-          placeholder="Enter Product Name Or Catagory ( Ex. Shirt, Hijab )"
+          placeholder="Enter Product Keyword Or Catagory ( Ex. Shirt, Hijab )"
           onChange={e => setSearchValue(e.target.value)}
           value={searchValue}
         />

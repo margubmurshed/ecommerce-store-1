@@ -1,57 +1,19 @@
-import { Button, IconButton } from "@material-ui/core";
-import {
-  Favorite,
-  FavoriteBorderOutlined,
-  ShoppingBasket,
-} from "@material-ui/icons";
+import { Button } from "@material-ui/core";
+import { ShoppingBasket, } from "@material-ui/icons";
 import { useState } from "react";
 import { useAddToCart } from "../Hooks/useAddToCart";
-import { useFavorites } from "../Hooks/useFavorites";
-import { useHistory } from "react-router-dom";
 
-const ProductButton = ({ favorites, user, product, cart }) => {
+const ProductButton = ({ product, cart }) => {
   const [addToCartLoading, setAddToCartLoading] = useState(false);
-  const [toggleFavoritesLoading, setToggleFavoritesLoading] = useState(false);
   const AddToCartFunc = useAddToCart();
-  const ToggleFavoritesFunc = useFavorites();
-  const history = useHistory();
 
   const OnClickAddToCart = () => {
     const { loading } = AddToCartFunc(cart, product, 'increase');
     setAddToCartLoading(loading);
   };
 
-  const OnClickToggleFavorites = () => {
-    if (user) {
-      const favorite = FindWhetherFavorite();
-      if (!favorite) {
-        const { loading } = ToggleFavoritesFunc(product, true);
-        setToggleFavoritesLoading(loading);
-      } else {
-        const { loading } = ToggleFavoritesFunc(product, false);
-        setToggleFavoritesLoading(loading);
-      }
-    } else {
-      history.push("/login");
-    }
-  };
-
-  const FindWhetherFavorite = () => {
-    const IsFavorite = !!favorites.filter(
-      (favoriteProduct) => favoriteProduct.id === product.id
-    ).length;
-    return IsFavorite;
-  };
-
   return (
-    <div className="product-buttons flex items-center justify-between p-3">
-      <IconButton
-        color="primary"
-        onClick={OnClickToggleFavorites}
-        disabled={toggleFavoritesLoading}
-      >
-        {FindWhetherFavorite() ? <Favorite /> : <FavoriteBorderOutlined />}
-      </IconButton>
+    <div className="p-3">
       <Button
         color="primary"
         variant="contained"

@@ -4,6 +4,7 @@ import { FindProduct } from "../../Components/Product/FindProduct";
 import RelatedProducts from "../../Components/Product/RelatedProducts";
 import MainDetails from "./MainDetails";
 import Description from "./Description";
+import Ratings from './Ratings';
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
@@ -21,6 +22,7 @@ const ProductDetails = () => {
         >
           <MainDetails Product={FoundProduct} user={user} cart={cart} />
           <Description description={description} />
+          <Ratings productId={productID} />
           <RelatedProducts catagory={catagory} productId={id} />
         </div>
       );

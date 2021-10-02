@@ -36,7 +36,7 @@ const Orders = () => {
                 <TableCell className="text-white font-semibold">Date</TableCell>
                 <TableCell className="text-white font-semibold">Status</TableCell>
                 <TableCell className="text-white font-semibold">Total</TableCell>
-                <TableCell className="text-white font-semibold">Actions</TableCell>
+                {/* <TableCell className="text-white font-semibold">Actions</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -52,7 +52,7 @@ const Orders = () => {
                     <span className="bg-yellow-100 p-3 rounded-md text-yellow-600 font-semibold">{orderInfo.status}</span>
                   </TableCell>
                   <TableCell>{orderInfo.total} Taka</TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Link
                       to={{
                         pathname: "/dashboard/orders/view",
@@ -61,7 +61,7 @@ const Orders = () => {
                     >
                       view
                     </Link>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
