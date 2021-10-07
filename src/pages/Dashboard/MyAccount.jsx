@@ -1,22 +1,33 @@
 import {
   Button, FormControl, InputLabel, MenuItem, Select, TextField
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FireStore } from "../../firebase";
-import Alert from '../../Components/Alert/Alert';
+import Alert from '../../Components/Alert';
 
 const MyAccount = () => {
   const { user, userInfo } = useSelector(({ user, userInfo }) => ({ user, userInfo }));
   const { displayName, email, uid, photoURL } = user;
-  const [name, setName] = useState(userInfo ? userInfo.name : displayName);
-  const [emailValue, setEmailValue] = useState(userInfo ? userInfo.email : email);
-  const [phoneNumber, setPhoneNumber] = useState(userInfo && userInfo.phoneNumber);
-  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState(userInfo && userInfo.alternativePhoneNumber);
-  const [deliveryAddress, setDeliveryAddress] = useState(userInfo && userInfo.deliveryAddress);
-  const [defaultPaymentMethod, setDefaultPaymentMethod] = useState(userInfo ? userInfo.defaultPaymentMethod : "cod");
+  const [name, setName] = useState(displayName);
+  const [emailValue, setEmailValue] = useState(email);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [defaultPaymentMethod, setDefaultPaymentMethod] = useState("cod");
   const [loading, setLoading] = useState(false);
   const [alerts, setAlert] = useState([])
+
+  useEffect(() => {
+    if (userInfo) {
+      setName(userInfo.name);
+      setEmailValue(userInfo.email)
+      setPhoneNumber(userInfo.phoneNumber)
+      setAlternativePhoneNumber(userInfo.alternativePhoneNumber)
+      setDeliveryAddress(userInfo.deliveryAddress)
+      setDefaultPaymentMethod(userInfo.defaultPaymentMethod)
+    }
+  }, [userInfo])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

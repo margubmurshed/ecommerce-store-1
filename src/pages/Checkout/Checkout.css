@@ -1,5 +1,5 @@
 .checkout-summary {
-    flex-basis: 25%;
+    flex-basis: 30%;
     height: max-content;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .checkout-details {
-    flex-basis: 75%;
+    flex-basis: 70%;
 }
 
 .amount-changer {

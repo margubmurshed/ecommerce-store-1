@@ -77,7 +77,6 @@ export const FetchUserInfo = uid => {
 export const FetchOrders = uid => {
     return async (dispatch) => {
         await FireStore.collection('orders').doc(uid).onSnapshot(doc => {
-            // console.log(doc.data(), 'orders')
             if (doc.exists) {
                 dispatch({
                     type: ActionTypes.fetchOrders,

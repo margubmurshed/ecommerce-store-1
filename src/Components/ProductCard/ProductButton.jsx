@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { ShoppingBasket, } from "@material-ui/icons";
 import { useState } from "react";
-import { useAddToCart } from "../Hooks/useAddToCart";
+import useAddToCart from "../../Hooks/useAddToCart";
 
 const ProductButton = ({ product, cart }) => {
   const [addToCartLoading, setAddToCartLoading] = useState(false);

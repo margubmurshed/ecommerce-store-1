@@ -1,14 +1,10 @@
-import { connect } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Route, useLocation, Redirect } from "react-router-dom";
 
-const MapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
+const PublicRoute = ({ children, path }) => {
+  const { from } = useLocation().state || { from: '/' };
+  const user = useSelector(({ user }) => user);
+  return !user ? <Route path={path} exact>{children}</Route> : <Redirect to={from} />
 };
 
-const PublicRoute = ({ user, children, path }) => {
-    return !user ? <Route path={path} exact>{children}</Route> : <Redirect to="/"/>;
-};
-
-export default connect(MapStateToProps)(PublicRoute);
+export default PublicRoute;

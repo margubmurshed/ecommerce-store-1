@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./Cart.css";
 import CartProducts from "./CartProducts";
-import SummaryCard from "./SummaryCard";
+import CartSummary from "./CartSummary";
 
 const Cart = () => {
   const { user, cart } = useSelector(({ user, cart }) => ({ user, cart }));
 
   useEffect(() => {
-    document.title = `Cart ${cart.length && `(${cart.length})`} | E-commerce`;
+    document.title = `Cart (${cart.length || ''}) | E-commerce`
   }, [cart]);
 
-  const SubTotal = () => {
+  const subTotal = () => {
     let subtotal = 0;
     cart.forEach(
       ({ product, count }) =>
@@ -20,9 +20,9 @@ const Cart = () => {
     return subtotal;
   };
 
-  const Total = () => {
+  const total = () => {
     const ShippingCost = 50;
-    return SubTotal() + ShippingCost;
+    return subTotal() + ShippingCost;
   };
 
   if (cart.length) {
@@ -33,11 +33,11 @@ const Cart = () => {
             <div className="products flex flex-col gap-5">
               <div className="bg-white flex justify-between md:flex-row rounded-md shadow-md p-4">
                 <p className="font-semibold text-sm md:text-base">My Cart ({cart.length} Items)</p>
-                <p className="font-semibold text-sm md:text-base">Total: {Total()} Tk.</p>
+                <p className="font-semibold text-sm md:text-base">Total: {total()} Tk.</p>
               </div>
               <CartProducts cart={cart} user={user} />
             </div>
-            <SummaryCard SubTotal={SubTotal} Total={Total} cart={cart} />
+            <CartSummary subTotal={subTotal} total={total} cart={cart} />
           </div>
         </div>
       </>

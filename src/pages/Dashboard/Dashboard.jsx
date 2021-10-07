@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 import MyAccount from './MyAccount';
 import Favorites from './Favorites';
 import Orders from './Orders';
-import useInnerWidth from '../../Components/Hooks/useInnerWidth';
+import useInnerWidth from '../../Hooks/useInnerWidth';
 
 const Dashboard = () => {
   const [currentTab, setCurrentTab] = useState('my-account');
@@ -23,8 +23,6 @@ const Dashboard = () => {
         return null
     }
   }
-
-  // console.log(findComponent())
 
   return (
     <>

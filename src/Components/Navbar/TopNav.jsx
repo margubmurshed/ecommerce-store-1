@@ -1,17 +1,15 @@
-import { Avatar, Badge, Button, Chip } from "@material-ui/core";
+import { Avatar, Badge, Button } from "@material-ui/core";
 import { Menu, PersonOutline, ShoppingBasket } from "@material-ui/icons";
-import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
-const TopNav = ({ Toggle, user, cart, userInfo }) => {
-  const name = userInfo ? userInfo.name : user ? user.displayName : '';
+const TopNav = ({ toggleSlider, user, cart }) => {
   return (
     <>
       <div className="flex items-center justify-between bg-white px-5 gap-x-2 sticky top-0" style={{ height: '70px' }}>
         <div className="flex items-center gap-x-2">
           <Menu
             className="cursor-pointer text-3xl important"
-            onClick={Toggle}
+            onClick={toggleSlider}
           />
           <NavLink
             to="/"
@@ -43,15 +41,7 @@ const TopNav = ({ Toggle, user, cart, userInfo }) => {
                 </Badge>
               </NavLink>
               <NavLink to="/dashboard">
-                <div className="hidden md:block">
-                  <Chip
-                    avatar={<Avatar src={user.photoURL} alt="user photo" />}
-                    label={name.length < 20 ? name : name.slice(0, 16) + '...'}
-                    variant="outlined"
-                    clickable
-                  />
-                </div>
-                <div className="block md:hidden">
+                <div>
                   <Avatar src={user.photoURL} alt="user photo" />
                 </div>
               </NavLink>
@@ -63,4 +53,4 @@ const TopNav = ({ Toggle, user, cart, userInfo }) => {
   );
 };
 
-export default memo(TopNav);
+export default TopNav;

@@ -1,8 +1,8 @@
-import './Loader.css';
+import styles from './Loader.module.css';
 
 const Loader = () => {
   return (
-    <div className="lds-ring">
+    <div className={styles.ldsRing}>
       <div></div>
       <div></div>
       <div></div>

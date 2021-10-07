@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9c796ea4.chunk.css",
+    "main.js": "/static/js/main.b33e50a1.chunk.js",
+    "main.js.map": "/static/js/main.b33e50a1.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b1972b56.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b1972b56.js.map",
+    "static/js/2.d2d4a82b.chunk.js": "/static/js/2.d2d4a82b.chunk.js",
+    "static/js/2.d2d4a82b.chunk.js.map": "/static/js/2.d2d4a82b.chunk.js.map",
+    "static/js/3.9d38312b.chunk.js": "/static/js/3.9d38312b.chunk.js",
+    "static/js/3.9d38312b.chunk.js.map": "/static/js/3.9d38312b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.9c796ea4.chunk.css.map": "/static/css/main.9c796ea4.chunk.css.map",
+    "static/js/2.d2d4a82b.chunk.js.LICENSE.txt": "/static/js/2.d2d4a82b.chunk.js.LICENSE.txt",
+    "static/media/googleLogo.3973ee88.png": "/static/media/googleLogo.3973ee88.png",
+    "static/media/nagadLogo.8e255717.svg": "/static/media/nagadLogo.8e255717.svg",
+    "static/media/rocketLogo.22abbf03.png": "/static/media/rocketLogo.22abbf03.png",
+    "static/media/success.1d4dd1d9.svg": "/static/media/success.1d4dd1d9.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b1972b56.js",
+    "static/js/2.d2d4a82b.chunk.js",
+    "static/css/main.9c796ea4.chunk.css",
+    "static/js/main.b33e50a1.chunk.js"
+  ]
+}

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import { useAddToCart } from "../../Components/Hooks/useAddToCart";
-import useInnerWidth from "../../Components/Hooks/useInnerWidth";
+import useAddToCart from "../../Hooks/useAddToCart";
+import useInnerWidth from "../../Hooks/useInnerWidth";
 
 const CartProducts = ({ cart }) => {
   const AddToCart = useAddToCart();

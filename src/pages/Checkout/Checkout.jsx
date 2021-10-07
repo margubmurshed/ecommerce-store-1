@@ -1,31 +1,40 @@
-import {
-  FormControlLabel, Radio, RadioGroup, TextField
-} from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { FireStore } from "../../firebase";
-import BkashLogo from "../../assets/img/bkashLogo.png";
-import NagadLogo from "../../assets/img/nagadLogo.svg";
-import RocketLogo from "../../assets/img/rocketLogo.png";
-import UpayLogo from "../../assets/img/upayLogo.jpg";
 import "./Checkout.css";
-import Alert from "../../Components/Alert/Alert";
+import UserInfoForm from './UserInfoForm';
+import Summary from './Summary';
+import Alert from "../../Components/Alert";
+import Loader from "../../Components/Loader/Loader";
 
 const Checkout = () => {
   const location = useLocation();
   const history = useHistory();
   const { user, userInfo } = useSelector(({ user, userInfo }) => ({ user, userInfo }));
-  const { cart, total } = location.state;
-  const [name, setName] = useState(userInfo ? userInfo.name : user.displayName);
-  const [phoneNumber, setPhoneNumber] = useState(userInfo && userInfo.phoneNumber);
-  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState(userInfo && userInfo.alternativePhoneNumber);
-  const [address, setAddress] = useState(userInfo && userInfo.deliveryAddress);
-  const [paymentMethod, setPaymentMethod] = useState(userInfo ? userInfo.defaultPaymentMethod : "cod");
+  const [name, setName] = useState(user.displayName || '');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [alternativePhoneNumber, setAlternativePhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState("cod");
   const [loading, setLoading] = useState(false);
-  const [errors, setError] = useState([]);
+  const [alerts, setAlert] = useState([]);
 
-  const GetPreviousOrders = () => {
+  useEffect(() => {
+    document.title = "Checkout | E-commerce"
+  }, [])
+
+  useEffect(() => {
+    if (userInfo) {
+      setName(userInfo.name);
+      setPhoneNumber(userInfo.phoneNumber)
+      setAlternativePhoneNumber(userInfo.alternativePhoneNumber)
+      setAddress(userInfo.deliveryAddress)
+      setPaymentMethod(userInfo.defaultPaymentMethod)
+    }
+  }, [userInfo])
+
+  const getPreviousOrders = () => {
     return new Promise(resolve => {
       FireStore.collection("orders")
         .doc(user.uid)
@@ -40,24 +49,22 @@ const Checkout = () => {
     });
   };
 
-  const ResetCart = () => {
+  const resetCart = () => {
     FireStore.collection("carts").doc(user.uid).set({ cart: [] });
   };
 
-  const AllFieldsAreFilled = () => {
+  const isFilled = () => {
     if (
       name !== "" &&
       phoneNumber !== "" &&
       address !== "" &&
       paymentMethod !== ""
-    )
-      return true;
-    else {
-      return false;
-    }
+    ) return true;
+    else return false;
   };
 
   const createOrder = () => {
+    const { cart, total } = location.state;
     return {
       userInfo: {
         name,
@@ -75,172 +82,58 @@ const Checkout = () => {
     };
   }
 
-  const OnClickOrderNow = async () => {
-    if (AllFieldsAreFilled()) {
-      const PreviousOrders = await GetPreviousOrders();
+  const submitOrder = async () => {
+    if (isFilled()) {
+      setAlert([]);
+      setLoading(true);
+      const PreviousOrders = await getPreviousOrders();
       const Order = createOrder();
-
       try {
-        setError(false);
-        setLoading(true);
         await FireStore.collection("orders")
           .doc(user.uid)
           .set({ orders: [...PreviousOrders, Order] });
-        ResetCart();
+        resetCart();
+        setLoading(false);
         history.push({
           pathname: `/orderconfirmation/${user.uid}`,
           state: {
             uid: user.uid,
           },
         });
-        setLoading(false);
       } catch {
-        setError([...errors, 'Order Placement Failed']);
+        setAlert([{ message: 'Action Failed', color: 'red' }]);
         setLoading(false);
       }
+    } else {
+      setAlert([{ message: 'Please fill all fields', color: 'red' }]);
     }
   };
 
-  return (
-    <div className="flex flex-col lg:flex-row gap-3 p-3 relative">
-      {errors.length ? errors.map(message => <Alert message={message} color="red" />) : null}
-      <div className="flex flex-col bg-white rounded-md shadow-md p-5 gap-3 checkout-details">
-        <span className="text-xl font-semibold px-5 py-3 bg-blue-100 text-blue-800 rounded-md">
-          Shipping Info
-        </span>
-        <div className="flex flex-col gap-5">
-          <TextField
-            type="text"
-            variant="outlined"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            label="Enter your name"
-            autoComplete="off"
-            required
+  if (loading) return <Loader />
+
+  if (location.state) {
+    const { cart, total } = location.state;
+    return (
+      <div className="p-3">
+        {alerts.length ? alerts.map(({ message, color }) => <Alert key={message} message={message} color={color} remove={() => setAlert([])} />) : null}
+        <div className="flex flex-col lg:flex-row gap-3 relative">
+          <UserInfoForm
+            values={{ name, phoneNumber, alternativePhoneNumber, address, paymentMethod }}
+            setMethods={{ setName, setPhoneNumber, setAlternativePhoneNumber, setAddress, setPaymentMethod }}
           />
-          <TextField
-            type="tel"
-            variant="outlined"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            label="Enter your phone number"
-            autoComplete="off"
-            required
+          <Summary
+            cart={cart}
+            total={total}
+            loading={loading}
+            submitOrder={submitOrder}
           />
-          <TextField
-            type="tel"
-            variant="outlined"
-            value={alternativePhoneNumber}
-            onChange={(e) => setAlternativePhoneNumber(e.target.value)}
-            label="Enter your alternative phone number"
-            autoComplete="off"
-          />
-          <TextField
-            type="textarea"
-            variant="outlined"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            label="Enter your address"
-            autoComplete="off"
-            required
-            minRows={50}
-          />
-          <div className="flex flex-col">
-            <span className="text-xl font-semibold px-5 py-3 bg-blue-100 text-blue-800 rounded-md">
-              Payment Method
-            </span>
-            <RadioGroup
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-              className="px-2"
-            >
-              <div className="flex justify-between items-center py-5">
-                <FormControlLabel
-                  value="cod"
-                  control={<Radio />}
-                  label="Cash On Delivery"
-                  color="primary"
-                />
-              </div>
-              <div className="flex justify-between items-center py-5">
-                <FormControlLabel
-                  value="bkash"
-                  control={<Radio />}
-                  label="Bkash"
-                  color="primary"
-                />
-                <img src={BkashLogo} alt="bkashLogo" width="80px" />
-              </div>
-              <div className="flex justify-between items-center py-5">
-                <FormControlLabel
-                  value="nagad"
-                  control={<Radio />}
-                  label="Nagad"
-                  color="primary"
-                />
-                <img src={NagadLogo} alt="nagadLogo" width="80px" />
-              </div>
-              <div className="flex justify-between items-center py-5">
-                <FormControlLabel
-                  value="rocket"
-                  control={<Radio />}
-                  label="Rocket"
-                  color="primary"
-                />
-                <img src={RocketLogo} alt="rocketLogo" width="80px" />
-              </div>
-              <div className="flex justify-between items-center py-5">
-                <FormControlLabel
-                  value="upay"
-                  control={<Radio />}
-                  label="Upay"
-                  color="primary"
-                />
-                <img src={UpayLogo} alt="bkashLogo" width="80px" />
-              </div>
-            </RadioGroup>
-          </div>
         </div>
       </div>
-      <div className="checkout-summary flex flex-col bg-white rounded-md shadow-md sticky top-0 p-4 checkout-summary">
-        <span className="text-xl font-semibold px-5 py-3 bg-green-100 text-green-800 rounded-md">
-          Summary
-        </span>
-        <div className="mt-4 flex flex-col gap-3">
-          {cart.map(({ product, count }) => (
-            <div className="flex justify-between gap-4 w-full">
-              <p className="flex-1 text-sm">
-                {product.name} <strong>X {count}</strong>
-              </p>
-              <p>Tk. {product.price * count}</p>
-            </div>
-          ))}
-          <div className="flex justify-between w-full">
-            <p className="flex-1">Shipping</p>
-            <p>Tk. 50</p>
-            <hr />
-          </div>
-          <div className="flex justify-between w-full">
-            <p className="flex-1">Total</p>
-            <p>Tk. {total}</p>
-            <hr />
-          </div>
-          <div className="flex justify-between w-full">
-            <p className="font-semibold flex-1">Payable Total</p>
-            <p>Tk. {total}</p>
-            <hr />
-          </div>
-          <button
-            className="w-full bg-green-400 text-white p-3 rounded-md"
-            onClick={OnClickOrderNow}
-            disabled={loading}
-          >
-            Order Now
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+    )
+  } else {
+    history.push('/');
+    return null;
+  };
 };
 
 export default Checkout;

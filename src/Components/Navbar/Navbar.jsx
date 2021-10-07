@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import NavSlider from "./NavSlider";
 import TopNav from "./TopNav";
@@ -6,15 +6,14 @@ import TopNav from "./TopNav";
 const Navbar = () => {
   const { user, cart, userInfo } = useSelector(({ user, cart, userInfo }) => ({ user, cart, userInfo }))
   const [toggle, setToggle] = useState(true);
-
-  const Toggle = useCallback(() => {
-    setToggle(prevToggle => !prevToggle);
-  }, [])
+  const toggleSlider = () => {
+    setToggle((prevState) => !prevState);
+  }
 
   return (
     <nav>
-      <TopNav Toggle={Toggle} user={user} cart={cart} userInfo={userInfo} />
-      <NavSlider toggleState={toggle} Toggle={Toggle} user={user} />
+      <TopNav toggleSlider={toggleSlider} user={user} cart={cart} />
+      <NavSlider toggleSlider={toggleSlider} toggle={toggle} user={user} userInfo={userInfo} />
     </nav>
   );
 };

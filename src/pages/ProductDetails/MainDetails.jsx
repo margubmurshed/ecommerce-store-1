@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 import { Favorite } from "@material-ui/icons";
-import { useAddToCart } from "../../Components/Hooks/useAddToCart";
-import useInnerWidth from '../../Components/Hooks/useInnerWidth';
-import Alert from '../../Components/Alert/Alert';
-import { useFavorites } from "../../Components/Hooks/useFavorites";
+import useAddToCart from "../../Hooks/useAddToCart";
+import useFavorites from "../../Hooks/useFavorites";
+import useInnerWidth from '../../Hooks/useInnerWidth';
+import Alert from '../../Components/Alert';
 
 const MainDetails = ({ Product, cart }) => {
   const [loading, setLoading] = useState(false);
-  const [toggleFavoritesLoading, setToggleFavoritesLoading] = useState(false);
   const [error, setError] = useState([]);
+  const [toggleFavoritesLoading, setToggleFavoritesLoading] = useState(false);
+
   const history = useHistory();
-  const AddToCartFunc = useAddToCart();
   const width = useInnerWidth();
+  const AddToCartFunc = useAddToCart();
   const ToggleFavoritesFunc = useFavorites();
+
   const { favorites, user } = useSelector(({ favorites, user }) => ({ favorites, user }));
   const { name, catagory, price, productImage } = Product;
 
@@ -68,13 +70,15 @@ const MainDetails = ({ Product, cart }) => {
           <div style={{ flexBasis: width >= 768 ? '30%' : '100%', height: '100%' }} className="flex items-center">
             <img src={productImage} alt={name} width="100%" height="auto" />
           </div>
-          <div className="p-4 md:p-10 flex-1 flex flex-col gap-8">
+          <div className="p-4 md:p-10 flex-1 flex flex-col gap-6">
             <p className="text-base md:text-2xl font-semibold">{name}</p>
             <p>
-              Catagory:{" "}
-              <span className="px-5 py-2 bg-blue-100 rounded-md">
-                {catagory}
-              </span>
+              Catagory: <Chip
+                label={catagory}
+                color="primary"
+                variant="outlined"
+                clickable
+              />
             </p>
             <p className="text-xl font-semibold">{price} Taka</p>
             <div className="flex gap-2">
