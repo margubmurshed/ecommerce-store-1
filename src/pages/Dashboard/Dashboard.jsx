@@ -26,7 +26,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col md:flex-row border" style={{ height: "90vh" }}>
+      <div className="w-full flex flex-col md:flex-row border" style={{ minHeight: "90vh" }}>
         <Sidebar currentTab={currentTab} width={width} setCurrentTab={setCurrentTab} />
         <div style={{ flex: width >= 768 ? '0.8' : '1' }} className={width >= 768 ? "overflow-y-auto" : ''}>
           {findComponent()}
