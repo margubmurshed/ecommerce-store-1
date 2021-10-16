@@ -4,7 +4,7 @@
 
 <br>
 
-[Live Site](https://margub-webshop.web.app/)
+<a href="https://margub-webshop.web.app/">View Live</a>
 
 ## Technologies used on this Project
 
